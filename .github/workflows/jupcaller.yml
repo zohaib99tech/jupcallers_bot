@@ -21,6 +21,9 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Install more depends
+        run: playwright install chromium
+
       - name: Run jupcaller script
         env:
             SOLANA_PRIVATE_KEY: ${{ secrets.SOLANA_PRIVATE_KEY }}
