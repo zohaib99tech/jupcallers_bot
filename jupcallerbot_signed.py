@@ -12,13 +12,13 @@ from solders.keypair import Keypair
 from solders.message import to_bytes_versioned
 from solders.transaction import VersionedTransaction
 
-load_dotenv()
+load_dotenv(override=True)
 
 # PRIVATE_KEY = os.environ["SOLANA_PRIVATE_KEY"]
-PRIVATE_KEY = os.getenv["SOLANA_PRIVATE_KEY"]
+PRIVATE_KEY = os.getenv("SOLANA_PRIVATE_KEY")
 RPC_URL = os.getenv("RPC_URL", "https://api.mainnet-beta.solana.com")
 # JUP_API_KEY = os.environ["JUPITER_API_KEY"]
-JUP_API_KEY = os.getenv["JUPITER_API_KEY"]
+JUP_API_KEY = os.getenv("JUPITER_API_KEY")
 DEPOSIT_MINT = os.getenv("DEPOSIT_MINT")
 CALLER = os.getenv("CALLER", "surfmor")
 PERCENTAGE = float(os.getenv("PERCENTAGE", "0.15"))
