@@ -1,0 +1,80 @@
+[
+  {
+    "time": "2026-10-07 22:10:12 UTC",
+    "receipt_id": "3909",
+    "caller": "ecstasya",
+    "event_id": "POLY-1089273",
+    "outcome": "AS Monaco FC",
+    "entry_cents": 60,
+    "market_id": "POLY-5012026-0",
+    "is_yes": true,
+    "amount_usd": 8.02,
+    "signature": "4PvawhBsBghA5Uu7zMzxtBmgNtq9cscoouBZu6cTsWTJ3yPRuVK9G91f4t2hkJHthsEYMwjkprjJrXehzQADXrfs",
+    "solscan": "https://solscan.io/tx/4PvawhBsBghA5Uu7zMzxtBmgNtq9cscoouBZu6cTsWTJ3yPRuVK9G91f4t2hkJHthsEYMwjkprjJrXehzQADXrfs"
+  },
+  {
+    "time": "2026-10-07 23:53:06 UTC",
+    "receipt_id": "4599",
+    "caller": "surfmor",
+    "event_id": "POLY-1142290",
+    "outcome": "Oleksandra Oliynykova",
+    "entry_cents": 55,
+    "market_id": "POLY-5371727-0",
+    "is_yes": true,
+    "amount_usd": 6.82,
+    "signature": "5DFNnAQvUXiyTFbT73r8mthFJTppgfoKRbpmTmXJJbgmdNkG94m92q4jwiDPCMffKRJw82UDUSGQpg4bScWix87c",
+    "solscan": "https://solscan.io/tx/5DFNnAQvUXiyTFbT73r8mthFJTppgfoKRbpmTmXJJbgmdNkG94m92q4jwiDPCMffKRJw82UDUSGQpg4bScWix87c"
+  },
+  {
+    "time": "2026-10-08 22:54:15 UTC",
+    "receipt_id": "4686",
+    "caller": "surfmor",
+    "event_id": "POLY-1152121",
+    "outcome": "Andrey Rublev",
+    "entry_cents": 72,
+    "market_id": "POLY-5424053-1",
+    "is_yes": true,
+    "amount_usd": 13.95,
+    "signature": "raCiuYRub62Wm87596h1VxsMpS71aneL3dCHDrZLm18oXefQtSp9RJKehPYfPUiGE8nrpwHuwt4wbpdtL4FDxwj",
+    "solscan": "https://solscan.io/tx/raCiuYRub62Wm87596h1VxsMpS71aneL3dCHDrZLm18oXefQtSp9RJKehPYfPUiGE8nrpwHuwt4wbpdtL4FDxwj"
+  },
+  {
+    "time": "2026-10-09 21:29:11 UTC",
+    "receipt_id": "4818",
+    "caller": "surfmor",
+    "event_id": "POLY-1159859",
+    "outcome": "Peyton Stearns",
+    "entry_cents": 76,
+    "market_id": "POLY-5461066-0",
+    "is_yes": true,
+    "amount_usd": 11.86,
+    "signature": "3iuH5SfctxgLMmTnJx47gG43VAGLUmC4aNvM3i3QUkhxSMCHMhdtrdV2oJD92V8vy79iZyDs45tgM2CeypkA4uY8",
+    "solscan": "https://solscan.io/tx/3iuH5SfctxgLMmTnJx47gG43VAGLUmC4aNvM3i3QUkhxSMCHMhdtrdV2oJD92V8vy79iZyDs45tgM2CeypkA4uY8"
+  },
+  {
+    "time": "2026-10-09 21:30:09 UTC",
+    "receipt_id": "4817",
+    "caller": "surfmor",
+    "event_id": "POLY-1159864",
+    "outcome": "Alycia Parks",
+    "entry_cents": 60,
+    "market_id": "POLY-5461076-1",
+    "is_yes": true,
+    "amount_usd": 10.08,
+    "signature": "127ZLp3btVbAuQm4qoS4x1xEbnbXWA89dnWsTzNNvBoVEvEFeDfKpdEFbj2aZBxX72Ma8jVWpZuLgU2BKYpUCRAQ",
+    "solscan": "https://solscan.io/tx/127ZLp3btVbAuQm4qoS4x1xEbnbXWA89dnWsTzNNvBoVEvEFeDfKpdEFbj2aZBxX72Ma8jVWpZuLgU2BKYpUCRAQ"
+  },
+  {
+    "time": "2026-10-09 22:07:21 UTC",
+    "receipt_id": "4820",
+    "caller": "surfmor",
+    "event_id": "POLY-1158726",
+    "outcome": "Jay Dylan Friend",
+    "entry_cents": 80,
+    "market_id": "POLY-5455109-1",
+    "is_yes": true,
+    "amount_usd": 8.57,
+    "signature": "5y6VRsD1KbAggBHUTkm2uu7fiN7iRXyqJJnhETSArLhMJBQJEHNFemct9xGeVopArfqbQcoatUP7BQ9BZJeVnCwU",
+    "solscan": "https://solscan.io/tx/5y6VRsD1KbAggBHUTkm2uu7fiN7iRXyqJJnhETSArLhMJBQJEHNFemct9xGeVopArfqbQcoatUP7BQ9BZJeVnCwU"
+  }
+]

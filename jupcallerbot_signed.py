@@ -11,9 +11,12 @@ from playwright.async_api import async_playwright
 from solders.keypair import Keypair
 from solders.message import to_bytes_versioned
 from solders.transaction import VersionedTransaction
+import time
 
 load_dotenv(override=True)
 
+STATUS_PATH = Path("bot_status.json")
+TRADES_PATH = Path("trades.json")
 # PRIVATE_KEY = os.environ["SOLANA_PRIVATE_KEY"]
 PRIVATE_KEY = os.getenv("SOLANA_PRIVATE_KEY")
 RPC_URL = os.getenv("RPC_URL", "https://api.mainnet-beta.solana.com")
@@ -169,19 +172,6 @@ async def rpc(method: str, params: list) -> dict:
         return (await http.post(RPC_URL, json=payload)).json()
 
 
-# async def simulate(signed_b64: str) -> bool:
-#     body = await rpc("simulateTransaction", [signed_b64, {"encoding": "base64", "sigVerify": True, "replaceRecentBlockhash": False}])
-#     value = (body.get("result") or {}).get("value") or {}
-#     err = body.get("error") or value.get("err")
-#     if err:
-#         print(f"simulation failed: {err}")
-#         logs = value.get("logs") or []
-#         if logs:
-#             print("logs:", logs[-8:])
-#         return False
-#     print("simulation ok")
-#     return True
-
 async def simulate(signed_b64: str) -> bool:
     body = await rpc(
         "simulateTransaction",
@@ -263,29 +253,60 @@ async def place_order(http: httpx.AsyncClient, market_id: str, is_yes: bool, amo
         return signature
     return None
 
+def load_trades() -> list:
+    return json.loads(TRADES_PATH.read_text()) if TRADES_PATH.exists() else []
+
+def record_trade(call: dict, resolved: dict, signature: str, amount_usd: float) -> None:
+    trades = load_trades()
+    trades.append({
+        "time": time.strftime("%Y-%m-%d %H:%M:%S UTC", time.gmtime()),
+        "receipt_id": call["receipt_id"],
+        "caller": CALLER,
+        "event_id": call["event_id"],
+        "outcome": call["outcome"],
+        "entry_cents": call.get("price_cents"),
+        "market_id": resolved["market_id"],
+        "is_yes": resolved["is_yes"],
+        "amount_usd": round(amount_usd, 2),
+        "signature": signature,
+        "solscan": f"https://solscan.io/tx/{signature}",
+    })
+    TRADES_PATH.write_text(json.dumps(trades, indent=2))
+
+def write_status(**extra) -> None:
+    STATUS_PATH.write_text(json.dumps({
+        "wallet": OWNER,
+        "caller": CALLER,
+        "dry_run": DRY_RUN,
+        "updated": time.strftime("%Y-%m-%d %H:%M:%S UTC", time.gmtime()),
+        **extra,
+    }, indent=2))
 
 async def main() -> None:
     seen = load_seen()
     print(f"wallet {OWNER} | caller {CALLER} | DRY_RUN={DRY_RUN} | seen={len(seen)}")
     async with async_playwright() as pw, httpx.AsyncClient(timeout=40) as http:
         page = await (await pw.chromium.launch(headless=True)).new_page()
-        # while True:
-        try:
-            fresh = [c for c in await scrape_open_calls(page) if c["receipt_id"] not in seen]
-            amount = (await balance_usd()) * PERCENTAGE if fresh else 0
-            if fresh:
-                print(f"using 15% = ${amount:.2f}")
-            for call in fresh:
-                resolved = await resolve_market(http, call["event_id"], call["outcome"])
-                if not resolved:
-                    continue
-                result = await place_order(http, resolved["market_id"], resolved["is_yes"], amount)
-                if result:
-                    seen.add(call["receipt_id"])
-                    save_seen(seen)
-        except Exception as exc:
-            print("tick error:", exc)
-            # await asyncio.sleep(POLL_SECONDS)
+        while True:
+            try:
+                write_status(state="polling")
+                fresh = [c for c in await scrape_open_calls(page) if c["receipt_id"] not in seen]
+                amount = (await balance_usd()) * PERCENTAGE if fresh else 0
+                if fresh:
+                    print(f"using 15% = ${amount:.2f}")
+                for call in fresh:
+                    resolved = await resolve_market(http, call["event_id"], call["outcome"])
+                    if not resolved:
+                        continue
+                    result = await place_order(http, resolved["market_id"], resolved["is_yes"], amount)
+                    if result:
+                        seen.add(call["receipt_id"])
+                        save_seen(seen)
+                        record_trade(call, resolved, result, amount)
+                        write_status(state="filled", last_market=resolved["market_id"], open_calls=len(fresh))
+            except Exception as exc:
+                print("tick error:", exc)
+            await asyncio.sleep(POLL_SECONDS)
 
 
 if __name__ == "__main__":
